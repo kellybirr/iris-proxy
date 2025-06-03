@@ -1,0 +1,20 @@
+@api_root=http://localhost:60736/
+@creds=12345
+@trans_token=12345
+@plate_token=12345
+
+###
+GET {{api_root}}/api/TransactionData/Locations?token={{trans_token}}
+Authorization: Basic {{creds}}
+
+###
+GET {{api_root}}/api/TransactionData/TransactionByUpdateDate?token={{trans_token}}&updateDateFrom=2025-02-28&updateDateTo=2025-03-01
+Authorization: Basic {{creds}}
+
+###
+GET {{api_root}}/api/PlateInfo/Regions?token={{plate_token}}
+Authorization: Basic {{creds}}
+
+###
+GET {{api_root}}/api/PlateInfo/ValidPlates?token={{plate_token}}
+Authorization: Basic {{creds}}
