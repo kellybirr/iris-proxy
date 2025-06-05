@@ -4,12 +4,18 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using IrisProxy.Models;
 using IrisProxy.TransactionData;
+using Newtonsoft.Json;
 
 namespace IrisProxy.Controllers
 {
     [RoutePrefix("api/TransactionData")]
     public class TransactionDataController : ApiController
     {
+        private readonly JsonSerializerSettings _serialSettings = new JsonSerializerSettings
+        {
+            Converters = { new Newtonsoft.Json.Converters.StringEnumConverter() }
+        };
+
         [HttpGet, Route("")]
         public IHttpActionResult Index()
         {
@@ -30,7 +36,7 @@ namespace IrisProxy.Controllers
                 token = token
             });
 
-            return Json(res.LocationResponse);
+            return Json(res.LocationResponse, _serialSettings);
         }
 
         [HttpGet, Route("PaymentTypes")]
@@ -47,7 +53,7 @@ namespace IrisProxy.Controllers
                 token = token
             });
 
-            return Json(res.PaymentTypeResponse);
+            return Json(res.PaymentTypeResponse, _serialSettings);
         }
 
         [HttpGet, Route("Paystations")]
@@ -64,7 +70,7 @@ namespace IrisProxy.Controllers
                 token = token
             });
 
-            return Json(res.PaystationResponse);
+            return Json(res.PaystationResponse, _serialSettings);
         }
 
         [HttpGet, Route("ProcessingStatusTypes")]
@@ -81,7 +87,7 @@ namespace IrisProxy.Controllers
                 token = token
             });
 
-            return Json(res.ProcessingStatusTypeResponse);
+            return Json(res.ProcessingStatusTypeResponse, _serialSettings);
         }
 
         [HttpGet, Route("TransactionByUpdateDate")]
@@ -100,7 +106,7 @@ namespace IrisProxy.Controllers
                 updateDateTo = updateDateTo
             });
 
-            return Json(res.TransactionResponse);
+            return Json(res.TransactionResponse, _serialSettings);
         }
 
         [HttpGet, Route("TransactionTypes")]
@@ -117,7 +123,7 @@ namespace IrisProxy.Controllers
                 token = token
             });
 
-            return Json(res.TransactionTypeResponse);
+            return Json(res.TransactionTypeResponse, _serialSettings);
         }
     }
 }

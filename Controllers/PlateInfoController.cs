@@ -3,12 +3,18 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using IrisProxy.Models;
 using IrisProxy.PlateInfo;
+using Newtonsoft.Json;
 
 namespace IrisProxy.Controllers
 {
     [RoutePrefix("api/PlateInfo")]
     public class PlateInfoController : ApiController
     {
+        private readonly JsonSerializerSettings _serialSettings = new JsonSerializerSettings
+        {
+            Converters = { new Newtonsoft.Json.Converters.StringEnumConverter() }
+        };
+
         [HttpGet, Route("")]
         public IHttpActionResult Index()
         {
@@ -31,7 +37,7 @@ namespace IrisProxy.Controllers
                 gracePeriodSpecified = gracePeriod.HasValue
             }); 
             
-            return Json(res.PlateInfoResponse);
+            return Json(res.PlateInfoResponse, _serialSettings);
         }
 
         [HttpGet, Route("ExpiredPlatesByGroup")]
@@ -51,7 +57,7 @@ namespace IrisProxy.Controllers
                 groupName = groupName
             });
 
-            return Json(res.PlateInfoResponse);
+            return Json(res.PlateInfoResponse, _serialSettings);
         }
 
         [HttpGet, Route("ExpiredPlatesByRegion")]
@@ -71,7 +77,7 @@ namespace IrisProxy.Controllers
                 region = region
             });
 
-            return Json(res.PlateInfoResponse);
+            return Json(res.PlateInfoResponse, _serialSettings);
         }
 
         [HttpGet, Route("Groups")]
@@ -88,7 +94,7 @@ namespace IrisProxy.Controllers
                 token = token
             });
 
-            return Json(res.GroupResponse);
+            return Json(res.GroupResponse, _serialSettings);
         }
 
         [HttpGet, Route("PlateInfo")]
@@ -106,7 +112,7 @@ namespace IrisProxy.Controllers
                 plateNumber = plateNumber
             }); 
             
-            return Json(res.PlateInfoByPlateResponse);
+            return Json(res.PlateInfoByPlateResponse, _serialSettings);
         }
 
         [HttpGet, Route("Regions")]
@@ -123,7 +129,7 @@ namespace IrisProxy.Controllers
                 token = token
             });
 
-            return Json(res.RegionResponse);
+            return Json(res.RegionResponse, _serialSettings);
         }
 
         [HttpGet, Route("ValidPlates")]
@@ -142,7 +148,7 @@ namespace IrisProxy.Controllers
                 gracePeriodSpecified = gracePeriod.HasValue
             });
 
-            return Json(res.PlateInfoResponse);
+            return Json(res.PlateInfoResponse, _serialSettings);
         }
 
         [HttpGet, Route("ValidPlatesByGroup")]
@@ -162,7 +168,7 @@ namespace IrisProxy.Controllers
                 groupName = groupName
             });
 
-            return Json(res.PlateInfoResponse);
+            return Json(res.PlateInfoResponse, _serialSettings);
         }
 
         [HttpGet, Route("ValidPlatesByRegion")]
@@ -182,7 +188,7 @@ namespace IrisProxy.Controllers
                 gracePeriodSpecified = gracePeriod.HasValue
             });
 
-            return Json(res.PlateInfoResponse);
+            return Json(res.PlateInfoResponse, _serialSettings);
         }
     }
 }
